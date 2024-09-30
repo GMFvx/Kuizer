@@ -104,7 +104,6 @@ h3{
 .first-content{
     display: flex;
     margin-left: 20px;
-    display: none;
 }
 .formulario{
     display: flex;
@@ -127,6 +126,7 @@ p{
     position: absolute;
     display: flex;
     justify-content: space-between;
+    
 }
 .second-content .first-colun{
     order: 2;
@@ -176,6 +176,7 @@ button{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 3;
 }
 .btn-secondary{
     background-color: transparent;
