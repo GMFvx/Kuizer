@@ -1,5 +1,5 @@
 
-document.getElementById('registerForm')?.addEventListener('submit', async function(e) {
+document.getElementById('formRegister')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -33,4 +33,5 @@ document.getElementById('loginForm')?.addEventListener('submit', async function(
     }) 
     const data = await response.json();
     alert(data.message);
+    
 })
