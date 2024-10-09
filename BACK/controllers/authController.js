@@ -53,7 +53,7 @@ exports.login = (req, res) => {
             return res.status(400).json({ message: 'Credenciais inválidas' });
         }
 
-        res.status(200).json({ message: 'Login efetuado com sucesso' });
-
+        res.status(200).json({ message: 'Login realizado com sucesso!', user });
     });
-};
+};  
+
