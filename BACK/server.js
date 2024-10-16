@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const db = require('./config/db');
 const mysql = require('mysql2');
+const path = require('path');
 
 const app = express();
 
@@ -16,6 +17,8 @@ db.connect((err) => {
     if (err) throw err;
     console.log('Conectado ao Banco');
 });
+
+app.use(express.static(path.join(__dirname, '../FRONT/src/pages')));
 
 // Rotas
 app.use('/', authRoutes); // Prefixo "/api" para organizar as rotas

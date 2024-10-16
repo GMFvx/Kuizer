@@ -1,6 +1,5 @@
 window.onload = async function() {
-    // Fazer uma requisição para verificar se o token está ativo e válido
-    const token = sessionStorage.getItem('token'); // Use sessionStorage temporariamente para manter o token entre as páginas
+    const token = sessionStorage.getItem('token'); // Pega o token do sessionStorage
 
     if (!token) {
         alert('Você não está autenticado');
@@ -8,11 +7,12 @@ window.onload = async function() {
         return;
     }
 
-    // Fazendo a requisição para o servidor para obter os dados do dashboard
+    // Faz a requisição para o dashboard enviando o token no cabeçalho
     const response = await fetch('http://localhost:3001/dashboard', {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`, // Envia o token JWT no cabeçalho de autorização
+            'Authorization': `Bearer ${token}`, // Adiciona o token no cabeçalho
+            'Content-Type': 'application/json'
         }
     });
 
@@ -22,6 +22,6 @@ window.onload = async function() {
         document.getElementById('dashboardContent').innerText = data.message;
     } else {
         alert('Erro ao carregar o dashboard');
-        window.location.href = 'login.html'; // Redireciona se houver erro
+        window.location.href = 'login.html';
     }
 };

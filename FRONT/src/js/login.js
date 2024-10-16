@@ -40,7 +40,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async function(
     if (response.ok) {
         alert(data.message);
         
-        // Armazenar o token temporariamente no sessionStorage em vez do localStorage
+        // Armazenar o token temporariamente no sessionStorage (sessão atual)
         sessionStorage.setItem('token', data.token); // Salva o token retornado na sessão atual
 
         // Redirecionar para o dashboard
