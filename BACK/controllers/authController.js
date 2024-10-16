@@ -1,6 +1,34 @@
-const db = require('../config/db')
-const bcrypt = require('bcrypt')
+const db = require('../config/db');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+// Middleware para verificar o token JWT
+exports.verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+
+    if (!token) {
+        return res.status(401).json({ message: 'Token não fornecido' });
+    }
+
+    jwt.verify(token, 'secretKey', (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Falha ao verificar o token' });
+        }
+
+        req.userId = decoded.id;
+        next();
+    });
+};
+
+// Controlador do dashboard
+exports.dashboard = (req, res) => {
+    res.status(200).json({
+        message: 'Bem-vindo ao dashboard!',
+        userId: req.userId
+    });
+};
+
+// Registro do usuário
 exports.register = (req, res) => {
     const { name, email, password } = req.body;
 
@@ -21,8 +49,7 @@ exports.register = (req, res) => {
     });
 };
 
-
-
+// Login do usuário
 exports.login = (req, res) => {
     const { email, password } = req.body;
 
@@ -45,15 +72,15 @@ exports.login = (req, res) => {
         const user = results[0];
 
         // Comparar a senha fornecida com a senha armazenada no banco
-
-        const isMatch = bcrypt.compareSync(password, user.password); 
-
+        const isMatch = bcrypt.compareSync(password, user.password);
 
         if (!isMatch) {
             return res.status(400).json({ message: 'Credenciais inválidas' });
         }
 
-        res.status(200).json({ message: 'Login realizado com sucesso!', user });
-    });
-};  
+        // Gerar um token JWT válido por 1h
+        const token = jwt.sign({ id: user.id }, 'secretKey', { expiresIn: '1h' });
 
+        res.status(200).json({ message: 'Login realizado com sucesso!', token }); // Certifique-se de incluir o token na resposta
+    });
+};
