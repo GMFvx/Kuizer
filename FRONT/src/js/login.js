@@ -36,18 +36,8 @@ document.getElementById('loginForm')?.addEventListener('submit', async function(
     });
 
     const data = await response.json();
-
-    if (response.ok) {
-        alert(data.message);
-        
-        // Armazenar o token temporariamente no sessionStorage (sessão atual)
-        sessionStorage.setItem('token', data.token); // Salva o token retornado na sessão atual
-
-        // Redirecionar para o dashboard
-        window.location.href = 'http://localhost:3001/dashboard';
-    } else {
-        alert(data.message);
-    }
+    
+    window.location.href = "../login-user/home2.html"//A DESGRAÇA DO REDIRECIONAMENTO
 });
 
 
